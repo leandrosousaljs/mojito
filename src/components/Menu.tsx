@@ -1,13 +1,40 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 
 import { sliderLists } from '../../constants';
 
 const Menu = () => {
   const contentRef = useRef<HTMLDivElement>(null);
-
   const [currentIndex, setcurrentIndex] = useState(0);
+
+  useGSAP(() => {
+    gsap.fromTo('#title', { opacity: 0 }, { opacity: 1, duration: 1 });
+    gsap.fromTo(
+      '.cocktail img',
+      { opacity: 0, xPercent: -100 },
+      { xPercent: 0, opacity: 1, duration: 1, ease: 'power1.inOut' },
+    );
+    gsap.fromTo('.details h2', { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 100, ease: 'power1.inOut' });
+    gsap.fromTo('.details p', { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 100, ease: 'power1.inOut' });
+  }, [currentIndex]);
+
+  useGSAP(() => {
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: '#menu',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.2,
+          invalidateOnRefresh: true,
+        },
+      })
+      .to('#m-right-leaf', { yPercent: 35 }, 0)
+      .to('#m-left-leaf', { yPercent: -35 }, 0);
+  }, []);
 
   const totalCocktails: number = sliderLists.length;
 
