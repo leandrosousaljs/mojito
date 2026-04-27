@@ -1,14 +1,12 @@
-'use client';
-
 import { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
-import { sliderLists } from '../../constants';
+import { sliderLists } from '../../constants/index.ts';
 
 const Menu = () => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setcurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useGSAP(() => {
     gsap.fromTo('#title', { opacity: 0 }, { opacity: 1, duration: 1 });
@@ -17,8 +15,16 @@ const Menu = () => {
       { opacity: 0, xPercent: -100 },
       { xPercent: 0, opacity: 1, duration: 1, ease: 'power1.inOut' },
     );
-    gsap.fromTo('.details h2', { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 100, ease: 'power1.inOut' });
-    gsap.fromTo('.details p', { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 100, ease: 'power1.inOut' });
+    gsap.fromTo(
+      '.details h2',
+      { yPercent: 100, opacity: 0 },
+      { yPercent: 0, opacity: 1, duration: 1, ease: 'power1.inOut' },
+    );
+    gsap.fromTo(
+      '.details p',
+      { yPercent: 100, opacity: 0 },
+      { yPercent: 0, opacity: 1, duration: 1, ease: 'power1.inOut' },
+    );
   }, [currentIndex]);
 
   useGSAP(() => {
@@ -38,13 +44,13 @@ const Menu = () => {
 
   const totalCocktails: number = sliderLists.length;
 
-  const gotToSlide = (index: number): void => {
+  const goToSlide = (index: number): void => {
     const newIndex = (index + totalCocktails) % totalCocktails;
-    setcurrentIndex(newIndex);
+    setCurrentIndex(newIndex);
   };
 
-  const getCocktailAt = (indexOffSet: number) =>
-    sliderLists[(currentIndex + indexOffSet + totalCocktails) % totalCocktails];
+  const getCocktailAt = (indexOffset: number) =>
+    sliderLists[(currentIndex + indexOffset + totalCocktails) % totalCocktails];
 
   const currentCocktail = getCocktailAt(0);
   const prevCocktail = getCocktailAt(-1);
@@ -66,8 +72,9 @@ const Menu = () => {
           return (
             <button
               className={`${isActive ? 'text-white border-white' : 'text-white/50 border-white/50'}`}
-              onClick={() => gotToSlide(index)}
+              onClick={() => goToSlide(index)}
               key={cocktail.id}
+              aria-current={isActive ? 'true' : undefined}
             >
               {cocktail.name}
             </button>
@@ -77,19 +84,19 @@ const Menu = () => {
 
       <div className="content">
         <div className="arrows">
-          <button className="text-left" onClick={() => gotToSlide(currentIndex - 1)}>
+          <button className="text-left" onClick={() => goToSlide(currentIndex - 1)}>
             <span>{prevCocktail.name}</span>
-            <img src="/images/right-arrow.png" alt="right-arrow" aria-hidden="true" />
+            <img src="/images/right-arrow.png" alt="" aria-hidden="true" />
           </button>
 
-          <button className="text-left" onClick={() => gotToSlide(currentIndex + 1)}>
+          <button className="text-left" onClick={() => goToSlide(currentIndex + 1)}>
             <span>{nextCocktail.name}</span>
-            <img src="/images/left-arrow.png" alt="left-arrow" aria-hidden="true" />
+            <img src="/images/left-arrow.png" alt="" aria-hidden="true" />
           </button>
         </div>
 
         <div className="cocktail">
-          <img src={currentCocktail.image} className="object-contain" alt="" />
+          <img src={currentCocktail.image} className="object-contain" alt={currentCocktail.name} />
         </div>
 
         <div className="recipe">
