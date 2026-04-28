@@ -13,7 +13,7 @@ const Contact = () => {
         trigger: '#contact',
         start: 'top center',
       },
-      ease: 'power1.inOut',
+      defaults: { ease: 'power1.inOut' },
     });
 
     tl.from(titleSplit.words, {
@@ -64,7 +64,7 @@ const Contact = () => {
           <h3>Open Every Day</h3>
           {openingHours.map(({ day, time }) => (
             <p key={day}>
-              {day}:{time}
+              {day}: {time}
             </p>
           ))}
         </div>
