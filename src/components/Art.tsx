@@ -17,6 +17,7 @@ const Art = () => {
         end: 'bottom center',
         scrub: 1.5,
         pin: true,
+        invalidateOnRefresh: true,
       },
     });
 

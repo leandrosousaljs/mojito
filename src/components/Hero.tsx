@@ -76,7 +76,7 @@ const Hero = () => {
         <img src="/images/hero-right-leaf.png" alt="" aria-hidden="true" className="right-leaf" />
 
         <div className="body">
-          {/* <img src="/images/arrow.png" alt="" aria-hidden="true" className="arrow" /> */}
+          <img src="/images/arrow.png" alt="" aria-hidden="true" className="arrow" />
 
           <div className="content">
             <div className="space-y-5 hidden md:block">
