@@ -90,6 +90,10 @@ body {
       @apply md:mt-32 mt-40 text-8xl md:text-[20vw] leading-none text-center font-modern-negra;
     }
 
+    .arrow {
+      @apply absolute right-1/2 translate-x-1/2 top-[150%] md:right-0 md:top-[30%] animate-bounce;
+    }
+
     .left-leaf {
       @apply absolute left-0 md:top-20 xl:top-36 2xl:top-52 md:bottom-auto -bottom-20 md:w-fit w-1/3;
     }
